@@ -1,0 +1,65 @@
+<style>
+    /* General Reset */
+    *,
+    *:before,
+    *:after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    .field{
+      display: flex;
+      align-items: center;
+      font-size: larger;
+      justify-content: center;
+    }
+
+    .reset-form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .reset-form form{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    input[type="email"]{
+      margin: 0 5px;
+      outline: none;
+      border-radius: 10px;
+      padding: 2px;
+    }
+
+    input[type="submit"]{
+      padding: 10px 15px;
+      border-radius: 10px;
+      margin: 20px 0;
+      color: #fff;
+      outline: none;
+      border: 0;
+      background-color: #de4b45;
+    }
+  </style>
+
+<div class="reset-form">
+  <h2>Forgot your password?</h2>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="field">
+      <%= f.label :"email: " %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Reset Password" %>
+    </div>
+  <% end %>
+<%# <%= render "devise/shared/links" %> 
+</div>

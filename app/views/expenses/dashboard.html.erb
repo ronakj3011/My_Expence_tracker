@@ -1,0 +1,242 @@
+<style type="text/css">
+  /* General Dashboard Styles */
+  .dashboard-container {
+    padding: 20px;
+    color: black;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .dashboard-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+  }
+
+  .welcome-message {
+    text-align: right;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  /* Stat Cards */
+  .stat-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 22%;
+  }
+
+  .stat-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+  }
+
+  .stat-card p {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  /* Quick Actions */
+  .quick-actions {
+    margin: 0 10px;
+    margin-top: 40px;
+  }
+
+  .quick-actions h2 {
+    margin-left: 29px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 15px;
+  }
+
+  .quick-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+
+  .quick-actions .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  .quick-actions .btn-primary {
+    background-color: #007bff;
+  }
+
+  .quick-actions .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+
+  .quick-actions .btn-secondary {
+    background-color: #6c757d;
+  }
+
+  .quick-actions .btn-secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+  }
+
+  /* Expenses Table */
+  .expenses-table {
+    margin: 0 10px;
+    margin-top: 40px;
+  }
+
+  .expenses-table h2 {
+    margin-left: 29px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+  }
+
+  .table {
+    margin-left: 30px;
+    width: 95%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+  }
+
+  .table th,
+  .table td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+    color: black;
+  }
+
+  .table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+
+  .table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+
+  /* Add to your existing CSS */
+  .btn-info {
+    background-color: #17a2b8;
+  }
+
+  .btn-info:hover {
+    background-color: #138496;
+  }
+
+</style>
+
+<div class="dashboard-container">
+  <h1 class="welcome-message" id="welcome-message">Welcome, <%= current_user.name.present? ? current_user.name.split(' ').first : "User" %></h1>
+
+  <!-- Dashboard Stats -->
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <h3>Total Expenses</h3>
+      <p>₹<%= @total_expenses %></p>
+    </div>
+    <div class="stat-card">
+      <h3>Current Month</h3>
+      <p>₹<%= @current_month_expenses %></p>
+    </div>
+    <div class="stat-card">
+      <h3>Remaining Budget</h3>
+      <p>₹<%= @remaining_budget %></p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Budget</h3>
+      <p>₹<%= @budget %></p>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <ul class="quick-links">
+      <li><%= link_to "Add New Expense", add_expense_path, class: "btn btn-primary" %></li>
+      <li><%= link_to "View Expense History", all_expenses_path, class: "btn btn-secondary" %></li>
+      <li><%= link_to "Set Your Budget", edit_budget_path, class: "btn btn-success" %></li>
+    </ul>
+  </div>
+
+  <!-- Expenses Table -->
+  <div class="expenses-table">
+    <h2>Recent Expenses</h2>
+    <% if @recent_expenses.any? %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Mode</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @recent_expenses.each do |expense| %>
+            <tr>
+              <td><%= expense.category %></td>
+              <td>₹<%= expense.amount %></td>
+              <td><%= expense.date.strftime("%B %d, %Y") %></td>
+              <td><%= expense.mode%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="table" style="background-color: inherit">No recent expenses recorded.</p>
+    <% end %>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      let welcomeMessage = document.getElementById("welcome-message");
+      if (welcomeMessage) {
+        welcomeMessage.style.display = "none";
+      }
+    }, 5000); // 5000 milliseconds = 5 seconds
+  });
+</script>

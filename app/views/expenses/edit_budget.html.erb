@@ -1,0 +1,31 @@
+<style>
+    .custom-form {
+        max-width: 500px;
+        margin: 0 auto;
+        margin-top: 25px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-grp{
+        margin-top: 10px;
+        display: flex;
+        gap: 75px;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<div class="custom-form">
+    <center><h2>Set Your Budget</h2></center>
+    <%= form_with model: @user, url: update_budget_path, method: :patch, local: true do |f| %>
+    <div class="form-group">
+        <center><%= f.label :budget, "Enter Your Budget" %></center>
+        <%= f.number_field :budget, step: 0.01, class: "form-control" %>
+    </div>
+    <div class="btn-grp">
+        <%= f.submit "Save Budget", class: "btn btn-success mt-2", style:"width: 40%"%>
+        <%= link_to "Back to Dashboard", user_dashboard_path, class: "btn btn-secondary mt-2", style:"width: 40%" %>
+    </div>
+    <% end %>
+</div>

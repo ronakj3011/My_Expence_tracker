@@ -1,0 +1,121 @@
+  <style>
+    *,
+    *:before,
+    *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    form {
+      height: auto;
+      width: 400px;
+      background-color: rgba(255, 255, 255, 0.13);
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 58%;
+      left: 50%;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgb(255, 255, 255);
+      box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+      padding: 50px 35px;
+    }
+
+    form h3 {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 42px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    input {
+      display: block;
+      height: 50px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 3px;
+      padding: 0 10px;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      border: 1px solid black;
+    }
+
+    input::active{
+      border: 0px;
+    }
+
+    ::placeholder {
+      color: #868686;
+    }
+
+    button {
+      margin-top: 50px;
+      width: 100%;
+      background-color: #ffffff;
+      color: #080710;
+      padding: 15px 0;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .social {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .social div {
+      width: 48%;
+      border-radius: 3px;
+      padding: 10px;
+      color: #eaf0fb;
+      text-align: center;
+      cursor: pointer;
+      border: 1.5px solid black;
+      color: black;
+      transition: background-color ease-in-out 0.2s,
+      color ease-in-out 0.2s;
+    }
+
+    .social div:hover {
+      background-color: #000;
+      color: #fff;
+    }
+
+    .social i {
+      margin-right: 4px;
+    }
+  </style>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f| %>
+    <h3>Login</h3>
+
+    <!-- Email Input -->
+    <label for="email">Email</label>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email or Phone", id: "email" %>
+
+    <!-- Password Input -->
+    <label for="password">Password</label>
+    <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password", id: "password" %>
+
+    <!-- Submit Button -->
+    <%= f.submit "Log In", class: "btn btn-danger" %>
+    <%= link_to "Forgot your password?", new_user_password_path, class: "btn btn-link" %>
+
+    <!-- Social Media Login -->
+    <div class="social">
+      <div class="go"><i class="fab fa-google"></i> Google</div>
+      <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+    </div>
+  <% end %>

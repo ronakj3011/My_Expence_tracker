@@ -1,0 +1,92 @@
+<style type="text/css">
+   .custom-form {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 25px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+textarea.form-control {
+  resize: vertical;
+  height: 150px; /* Adjust the height of the description text area */
+}
+
+</style>
+
+<div class="custom-form">
+    <%= form_with(model: @expense, url: expense_path(@expense), method: :patch, local: true) do |form| %>
+      <div class="form-group">
+        <%= form.label :category, class: 'form-label' %>
+        <%= form.select :category, options_for_select(["Transport", "Food", "Utilities", "Entertainment", "Other"], selected: @expense.category), { include_blank: "Select Category" }, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :amount, class: 'form-label' %>
+        <%= form.number_field :amount, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :date, class: 'form-label' %>
+        <%= form.date_field :date, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :description, class: 'form-label' %>
+        <%= form.text_area :description, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :mode, class: 'form-label' %>
+        <%= form.select :mode, options_for_select(["Cash", "Card", "Online", "Other"], selected: @expense.mode), { include_blank: "Select Mode" }, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.submit "Update Expense", class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+</div>
